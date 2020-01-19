@@ -29,8 +29,10 @@ class _MiniClockState extends State<MiniClock> {
   @override
   Widget build(BuildContext context) {
     final Tuple2<double, double> newState =
-        Provider.of<NumberChangeListener>(context).clockState[widget.index];
+        Provider.of<NumberChangeListener>(context).newState;
 
+
+    //debug
     if (widget.index == 1) {
       print('${beginState.item1} + ${newState.item1}');
     }

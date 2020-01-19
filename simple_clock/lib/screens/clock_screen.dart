@@ -4,15 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clock_helper/model.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_clock/components/digit.dart';
+import 'package:simple_clock/components/clock.dart';
 import 'package:tuple/tuple.dart';
 
-class Clock extends StatefulWidget {
+class ClockScreen extends StatefulWidget {
+
   @override
-  _ClockState createState() => _ClockState();
+  _ClockScreenState createState() => _ClockScreenState();
 }
 
-class _ClockState extends State<Clock> {
+class _ClockScreenState extends State<ClockScreen> {
 
   DateTime _dateTime = DateTime.now();
   Timer _timer;
@@ -46,29 +47,20 @@ class _ClockState extends State<Clock> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Consumer<ClockModel>(
+      body: Consumer<ClockModel>(
           builder: (BuildContext context, ClockModel value, Widget child) {
             final hour =
             DateFormat(value.is24HourFormat ? 'HH' : 'hh').format(_dateTime);
             final String minute = DateFormat('mm').format(_dateTime);
             print(hour);
             print(minute);
-            final hourDigit = Tuple2.fromList(hour.split(''));
-            final minutesDigit = Tuple2.fromList(minute.split(''));
+            final hourDigits = Tuple2.fromList(hour.split(''));
+            final minutesDigits = Tuple2.fromList(minute.split(''));
 
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Digit(int.parse(hourDigit.item1)),
-                Digit(int.parse(hourDigit.item2)),
-                Digit(int.parse(minutesDigit.item1)),
-                Digit(int.parse(minutesDigit.item2)),
-              ],
-            );
+            return Clock(hourDigits, minutesDigits);
           },
         ),
-      ),
+
     );
   }
 }
