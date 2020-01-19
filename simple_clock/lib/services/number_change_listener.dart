@@ -8,11 +8,7 @@ class NumberChangeListener with ChangeNotifier {
 
 
   void setNumber(int number) {
-    switch(number){
-      case 2:
-        ;
-        break;
-    }
+
     notifyListeners();
   }
 }

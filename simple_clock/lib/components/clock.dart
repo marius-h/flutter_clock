@@ -32,6 +32,7 @@ class _ClockState extends State<Clock> {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: GridView.count(
+        physics:  NeverScrollableScrollPhysics(),
         primary: true,
         shrinkWrap: true,
         padding: const EdgeInsets.all(8),
