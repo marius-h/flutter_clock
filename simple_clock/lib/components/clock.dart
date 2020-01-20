@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:simple_clock/components/mini_clock.dart';
 import 'package:simple_clock/services/number_change_listener.dart';
 import 'package:simple_clock/states/clock_state.dart';
+import 'package:simple_clock/styles/style_provider.dart';
 
 class Clock extends StatefulWidget {
   Clock({Key key}) : super(key: key);
@@ -18,7 +19,8 @@ class _ClockState extends State<Clock> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _clocks = List.generate(55, (int index) {
+    final styleProvider = Provider.of<StyleProvider>(context);
+    final List<Widget> _clocks = List.generate(66, (int index) {
       return Padding(
         padding: const EdgeInsets.all(4),
         child: ChangeNotifierProvider<ClockStateListener>(
@@ -33,6 +35,7 @@ class _ClockState extends State<Clock> {
     });
 
     return Scaffold(
+      backgroundColor: styleProvider.getThemeData.backgroundColor,
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
