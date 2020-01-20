@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:simple_clock/states/clock_state.dart';
 import 'package:tuple/tuple.dart';
 
-List<List<Tuple2<double, double>>> buildDigit(int digit, Point origin) {
+List<List<Tuple2<double, double>>> buildDigit(int digit, Point origin, List<List<Tuple2<double, double>>> grid) {
   List<List<Tuple2<double, double>>> pixels;
 
   switch (digit) {
@@ -86,17 +86,17 @@ List<List<Tuple2<double, double>>> buildDigit(int digit, Point origin) {
       break;
   }
 
-  return _moveToPoint(pixels, origin);
+  return _moveToPoint(pixels, origin, grid);
 }
 
 List<List<Tuple2<double, double>>> _moveToPoint(
-    List<List<Tuple2<double, double>>> pixels, Point origin) {
-  List<List<Tuple2<double, double>>> movedPixels;
+    List<List<Tuple2<double, double>>> pixels, Point origin, List<List<Tuple2<double, double>>> grid) {
+  //final movedPixels = List<List<Tuple2<double, double>>>.generate(7, (_) => List(11));
   for (var i = 0; i < pixels.length; ++i) {
     for (var j = 0; j < pixels[i].length; ++j) {
       var o = pixels[i][j];
-      movedPixels[origin.x + i][origin.y + j] = o;
+      grid[origin.y + j][origin.x + i] = o;
     }
   }
-  return movedPixels;
+  return grid;
 }

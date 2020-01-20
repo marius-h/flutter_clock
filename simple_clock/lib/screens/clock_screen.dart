@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_clock/components/clock.dart';
+import 'package:simple_clock/services/time_provider.dart';
 
 class ClockScreen extends StatefulWidget {
   @override
@@ -13,28 +15,22 @@ class _ClockScreenState extends State<ClockScreen> {
   Timer _timer;
 
   @override
-  void initState() {
-    super.initState();
-    _updateTime();
-  }
-
-  @override
   void dispose() {
     _timer.cancel();
     super.dispose();
   }
 
-  void _updateTime() {
-    setState(() {
-      _dateTime = DateTime.now();
+  void _updateTime(TimeProvider timeProvider) {
+    _dateTime = DateTime.now();
 
-      _timer = Timer(
-        Duration(minutes: 1) -
-            Duration(seconds: _dateTime.second) -
-            Duration(milliseconds: _dateTime.millisecond),
-        _updateTime,
-      );
-    });
+    timeProvider.updateTime(_dateTime);
+
+    _timer = Timer(
+      Duration(minutes: 1) -
+          Duration(seconds: _dateTime.second) -
+          Duration(milliseconds: _dateTime.millisecond),
+      () => _updateTime(timeProvider),
+    );
   }
 
   /*
@@ -49,6 +45,8 @@ class _ClockScreenState extends State<ClockScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //final timeProvider = Provider.of<TimeProvider>(context);
+    //_updateTime(timeProvider);
     return Scaffold(
       body: Clock(),
     );
