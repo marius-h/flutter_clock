@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_clock/components/animated_hand.dart';
 import 'package:simple_clock/services/number_change_listener.dart';
+import 'package:simple_clock/styles/style_provider.dart';
 import 'package:tuple/tuple.dart';
 
 class MiniClock extends StatefulWidget {
@@ -72,6 +73,7 @@ class _MiniClockState extends State<MiniClock> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final Tuple2<double, double> oldState = Provider.of<ClockStateListener>(context).oldState;
     final Tuple2<double, double> newState = Provider.of<ClockStateListener>(context).newState;
+    final styleProvider = Provider.of<StyleProvider>(context);
 
     print('build MiniClock with $oldState and $newState');
 
@@ -82,7 +84,7 @@ class _MiniClockState extends State<MiniClock> with TickerProviderStateMixin {
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.black12),
+              border: Border.all(color: styleProvider.getThemeData.accentColor),
               borderRadius: BorderRadius.all(Radius.circular(80)),
             ),
           ),

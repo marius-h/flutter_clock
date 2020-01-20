@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_clock/components/clock.dart';
+import 'package:simple_clock/styles/style_provider.dart';
 import 'package:simple_clock/services/time_provider.dart';
 
 class ClockScreen extends StatefulWidget {
+  ClockScreen({Key key}) : super(key: key);
   @override
   _ClockScreenState createState() => _ClockScreenState();
 }
@@ -45,10 +47,14 @@ class _ClockScreenState extends State<ClockScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final styleProvider = Provider.of<StyleProvider>(context);
     //final timeProvider = Provider.of<TimeProvider>(context);
     //_updateTime(timeProvider);
     return Scaffold(
-      body: Clock(),
+      body: GestureDetector(
+          onTap: () {styleProvider.changeThemeData();},
+          child: Clock()
+      ),
     );
   }
 }

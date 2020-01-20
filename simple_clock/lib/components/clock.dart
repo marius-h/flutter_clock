@@ -7,6 +7,7 @@ import 'package:simple_clock/models/digits.dart';
 import 'package:simple_clock/services/number_change_listener.dart';
 import 'package:simple_clock/services/time_provider.dart';
 import 'package:simple_clock/states/clock_state.dart';
+import 'package:simple_clock/styles/style_provider.dart';
 import 'package:tuple/tuple.dart';
 
 class Clock extends StatefulWidget {
@@ -46,6 +47,7 @@ class _ClockState extends State<Clock> {
 
   @override
   Widget build(BuildContext context) {
+    final styleProvider = Provider.of<StyleProvider>(context);
 
     _pixelGrid =
         List<List<Tuple2<double, double>>>.generate(ITEMS_PER_ROW, (_) {
@@ -53,6 +55,7 @@ class _ClockState extends State<Clock> {
     });
 
     return Scaffold(
+      backgroundColor: styleProvider.getThemeData.backgroundColor,
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
