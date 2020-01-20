@@ -1,41 +1,81 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:simple_clock/services/number_change_listener.dart';
-import 'package:simple_clock/states/clock_state.dart';
-import 'package:simple_clock/components/drawn_hand.dart';
-import 'package:simple_clock/styles/style.dart';
-import 'package:tuple/tuple.dart';
-import 'package:vector_math/vector_math_64.dart' show radians;
 import 'package:provider/provider.dart';
-
-final radiansPerTick = radians(360 / 60);
+import 'package:simple_clock/components/animated_hand.dart';
+import 'package:simple_clock/services/number_change_listener.dart';
+import 'package:tuple/tuple.dart';
 
 class MiniClock extends StatefulWidget {
-  MiniClock({@required this.index, Key key}) : super(key: key);
-
-  final int index;
+  MiniClock({Key key}) : super(key: key);
 
   @override
   _MiniClockState createState() => _MiniClockState();
 }
 
-class _MiniClockState extends State<MiniClock> {
-  Duration _duration = Duration(seconds: 1, milliseconds: 500);
+class _MiniClockState extends State<MiniClock> with TickerProviderStateMixin {
+  final Duration _duration = const Duration(seconds: 2);
+  final int repetitions = 3;
+  final Cubic customEase = Cubic(0.2, 0.0, 0.8, 1.0);
 
-  Tuple2<double, double> beginState = ClockState.idle;
-  Tuple2<double, double> endState;
+  AnimationController _firstHandController;
+  AnimationController _secondHandController;
+  Animation<double> _firstHandAnimation;
+  Animation<double> _secondHandAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _firstHandController = AnimationController(
+      duration: _duration * repetitions,
+      vsync: this,
+    );
+    _secondHandController = AnimationController(
+      duration: _duration * repetitions,
+      vsync: this,
+    );
+  }
+
+  void initAnimations(
+      Tuple2<double, double> oldState, Tuple2<double, double> newState) {
+    _firstHandController.reset();
+    double firstHandDifference = newState.item1 <= oldState.item1
+        ? 60 - oldState.item1 + newState.item1
+        : newState.item1;
+    _firstHandAnimation = Tween<double>(
+      begin: oldState.item1,
+      end: oldState.item1 + repetitions * 60 + firstHandDifference,
+    ).animate(
+      CurvedAnimation(
+        parent: _firstHandController,
+        curve: customEase,
+      ),
+    );
+    _firstHandController.forward();
+
+    _secondHandController.reset();
+    double secondHandDifference = newState.item2 > oldState.item2
+        ? newState.item2
+        : 60 - oldState.item2 + newState.item2;
+    _secondHandAnimation = Tween<double>(
+      begin: oldState.item2,
+      end: oldState.item2 - repetitions * 60 + secondHandDifference,
+    ).animate(
+      CurvedAnimation(
+        parent: _secondHandController,
+        curve: customEase,
+      ),
+    );
+    _secondHandController.forward();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final Tuple2<double, double> newState =
-        Provider.of<NumberChangeListener>(context).newState;
+    final Tuple2<double, double> oldState = Provider.of<ClockStateListener>(context).oldState;
+    final Tuple2<double, double> newState = Provider.of<ClockStateListener>(context).newState;
 
+    print('build MiniClock with $oldState and $newState');
 
-    //debug
-    if (widget.index == 1) {
-      print('${beginState.item1} + ${newState.item1}');
-    }
+    initAnimations(oldState, newState);
 
     return Container(
       child: Stack(
@@ -46,34 +86,8 @@ class _MiniClockState extends State<MiniClock> {
               borderRadius: BorderRadius.all(Radius.circular(80)),
             ),
           ),
-          TweenAnimationBuilder<double>(
-            tween: Tween<double>(
-                begin: beginState.item1, end: newState.item1),
-            duration: _duration,
-            onEnd: () => beginState = Tuple2(newState.item1, newState.item2),
-            builder: (BuildContext context, double value, Widget child) {
-              return DrawnHand(
-                color: Style.darkTheme.primaryColor,
-                size: 1,
-                thickness: 4,
-                angleRadians: value * radiansPerTick,
-              );
-            },
-          ),
-          TweenAnimationBuilder<double>(
-            tween: Tween<double>(
-                begin: beginState.item2, end: newState.item2),
-            duration: _duration,
-            onEnd: () => beginState = Tuple2(newState.item1, newState.item2),
-            builder: (BuildContext context, double value, Widget child) {
-              return DrawnHand(
-                color: Style.darkTheme.primaryColor,
-                size: 1,
-                thickness: 4,
-                angleRadians: value * radiansPerTick,
-              );
-            },
-          ),
+          AnimatedHand(animation: _firstHandAnimation),
+          AnimatedHand(animation: _secondHandAnimation),
         ],
       ),
     );
