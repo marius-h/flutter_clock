@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 final darkTheme = ThemeData(
-  primaryColor: Colors.black,
+  primaryColor: Colors.white, //pointer color
   brightness: Brightness.dark,
-  backgroundColor: Colors.white,
-  accentColor: Colors.black12,
+  backgroundColor: Colors.black, //background color
+  accentColor: Colors.blueAccent[700], //circle color
 );
 
 final lightTheme = ThemeData(
-  primaryColor: Colors.white,
-  brightness: Brightness.dark,
-  backgroundColor: Colors.black,
-  accentColor: Colors.white12,
+  primaryColor: Colors.black, //pointer color
+  brightness: Brightness.light,
+  backgroundColor: Colors.white, //background color
+  accentColor: Colors.black12, //circle color
 );

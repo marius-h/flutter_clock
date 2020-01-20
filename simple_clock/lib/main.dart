@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
         create: (_) => StyleProvider(isLightTheme: false),
         child: MaterialApp(
-          title: 'Flutter Demo',
+          title: 'Analog clocks to digital clock',
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
