@@ -9,9 +9,10 @@ List<List<Tuple2<double, double>>> buildDigit(int digit, Point origin, List<List
 
   switch (digit) {
     case -1:
+      // Temp
       pixels = [
-        [ClockState.reset, ClockState.reset,ClockState.reset],
-        [ClockState.reset, ClockState.reset,ClockState.reset],
+        [ClockState.south_east, ClockState.north_east,ClockState.idle],
+        [ClockState.south_west, ClockState.north_west,ClockState.idle],
       ];
       break;
     case 0:
