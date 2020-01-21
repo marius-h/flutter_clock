@@ -6,6 +6,7 @@ import 'package:simple_clock/components/clock.dart';
 import 'package:simple_clock/styles/style_provider.dart';
 import 'package:simple_clock/services/time_provider.dart';
 
+// time & onTap for switching styles
 class ClockScreen extends StatefulWidget {
   ClockScreen({Key key}) : super(key: key);
   @override

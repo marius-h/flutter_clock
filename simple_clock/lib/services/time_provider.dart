@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:tuple/tuple.dart';
 
+// Provider for the current time
 class TimeProvider extends ChangeNotifier {
   int _firstDigit = 1;
   int _secondDigit = 3;
   int _thirdDigit = 3;
-  int _fourthDigit = 7;
+  int _fourthDigit = 8;
 
   void updateTime(DateTime time) {
-   // _firstDigit = int.parse(time.hour.toString().substring(0, 0));
-   // _secondDigit = int.parse(time.hour.toString().substring(1, 1));
-   // _firstDigit = int.parse(time.minute.toString().substring(0, 0));
-   // _secondDigit = int.parse(time.minute.toString().substring(1, 1));
+    //
     notifyListeners();
   }
 

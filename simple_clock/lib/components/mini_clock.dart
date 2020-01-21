@@ -5,6 +5,7 @@ import 'package:simple_clock/services/number_change_listener.dart';
 import 'package:simple_clock/styles/style_provider.dart';
 import 'package:tuple/tuple.dart';
 
+// Miniclock Component with Animation Controller
 class MiniClock extends StatefulWidget {
   MiniClock({Key key}) : super(key: key);
 

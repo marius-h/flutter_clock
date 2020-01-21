@@ -10,6 +10,7 @@ import 'package:simple_clock/states/clock_state.dart';
 import 'package:simple_clock/styles/style_provider.dart';
 import 'package:tuple/tuple.dart';
 
+// grid out of Miniclocks
 class Clock extends StatefulWidget {
   Clock({Key key}) : super(key: key);
 

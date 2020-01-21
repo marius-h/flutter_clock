@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// Themes
+
 final darkTheme = ThemeData(
   primaryColor: Colors.white, //pointer color
   brightness: Brightness.dark,

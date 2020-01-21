@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:simple_clock/states/clock_state.dart';
 import 'package:tuple/tuple.dart';
 
+// all 4 digits from 0 to 9 + reset
 List<List<Tuple2<double, double>>> buildDigit(int digit, Point origin, List<List<Tuple2<double, double>>> grid) {
   List<List<Tuple2<double, double>>> pixels;
 
