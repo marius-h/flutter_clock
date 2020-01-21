@@ -3,12 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_clock/components/clock.dart';
-import 'package:simple_clock/styles/style_provider.dart';
 import 'package:simple_clock/services/time_provider.dart';
+import 'package:simple_clock/styles/style_provider.dart';
 
 // time & onTap for switching styles
 class ClockScreen extends StatefulWidget {
   ClockScreen({Key key}) : super(key: key);
+
   @override
   _ClockScreenState createState() => _ClockScreenState();
 }
@@ -36,26 +37,22 @@ class _ClockScreenState extends State<ClockScreen> {
     );
   }
 
-  /*
-   final hour =
-            DateFormat(value.is24HourFormat ? 'HH' : 'hh').format(_dateTime);
-            final String minute = DateFormat('mm').format(_dateTime);
-            print(hour);
-            print(minute);
-            final hourDigits = Tuple2.fromList(hour.split(''));
-            final minutesDigits = Tuple2.fromList(minute.split(''));
-   */
-
   @override
   Widget build(BuildContext context) {
     final styleProvider = Provider.of<StyleProvider>(context);
-    //final timeProvider = Provider.of<TimeProvider>(context);
-    //_updateTime(timeProvider);
-    return Scaffold(
-      body: GestureDetector(
-          onTap: () {styleProvider.changeThemeData();},
-          child: Clock()
-      ),
+
+    return Consumer<TimeProvider>(
+      builder: (BuildContext context, TimeProvider value, Widget child) {
+        _updateTime(value);
+
+        return Scaffold(
+          body: GestureDetector(
+              onTap: () {
+                styleProvider.changeThemeData();
+              },
+              child: Clock()),
+        );
+      },
     );
   }
 }

@@ -69,12 +69,6 @@ class _ClockState extends State<Clock> {
             _pixelGrid =
                 buildDigit(value.fourthDigit, originMinute2, _pixelGrid);
 
-//            final list = List<List<Tuple2<double, double>>>(55);
-//            list.addAll(firstDigit);
-//            list.addAll(secondDigit);
-//            list.addAll(thirdDigit);
-//            list.addAll(fourthDigit);
-
             for (var i = 0; i < _pixelGrid.length; ++i) {
               for (var j = 0; j < _pixelGrid[i].length; ++j) {
                 var o = _pixelGrid[i][j];

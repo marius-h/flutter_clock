@@ -9,7 +9,10 @@ class TimeProvider extends ChangeNotifier {
   int _fourthDigit = 8;
 
   void updateTime(DateTime time) {
-    //
+    _firstDigit = time.hour ~/ 10;
+    _secondDigit = time.hour % 10;
+    _thirdDigit = time.minute ~/ 10;
+    _fourthDigit = time.minute % 10;
     notifyListeners();
   }
 

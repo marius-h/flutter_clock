@@ -14,8 +14,8 @@ class MiniClock extends StatefulWidget {
 }
 
 class _MiniClockState extends State<MiniClock> with TickerProviderStateMixin {
-  final Duration _duration = const Duration(seconds: 2);
-  final int repetitions = 3;
+  final Duration _duration = const Duration(seconds: 5);
+  final int repetitions = 2;
   final Cubic customEase = Cubic(0.2, 0.0, 0.8, 1.0);
 
   AnimationController _firstHandController;
@@ -37,12 +37,22 @@ class _MiniClockState extends State<MiniClock> with TickerProviderStateMixin {
     );
   }
 
+  @override
+  void dispose() {
+    _firstHandController.dispose();
+    _secondHandController.dispose();
+    super.dispose();
+  }
+
   void initAnimations(
       Tuple2<double, double> oldState, Tuple2<double, double> newState) {
     _firstHandController.reset();
-    double firstHandDifference = newState.item1 <= oldState.item1
-        ? 60 - oldState.item1 + newState.item1
-        : newState.item1;
+    double firstHandDifference = 0;
+    if (newState.item1 < oldState.item1) {
+      firstHandDifference = 60 - oldState.item1 + newState.item1;
+    } else if (newState.item1 > oldState.item1) {
+      firstHandDifference = newState.item1 - oldState.item1;
+    }
     _firstHandAnimation = Tween<double>(
       begin: oldState.item1,
       end: oldState.item1 + repetitions * 60 + firstHandDifference,
@@ -55,9 +65,12 @@ class _MiniClockState extends State<MiniClock> with TickerProviderStateMixin {
     _firstHandController.forward();
 
     _secondHandController.reset();
-    double secondHandDifference = newState.item2 > oldState.item2
-        ? newState.item2
-        : 60 - oldState.item2 + newState.item2;
+    double secondHandDifference = 0;
+    if (newState.item2 < oldState.item2) {
+      secondHandDifference = newState.item2 - oldState.item2;
+    } else if (newState.item2 > oldState.item2) {
+      secondHandDifference = 60 - oldState.item2 + newState.item2;
+    }
     _secondHandAnimation = Tween<double>(
       begin: oldState.item2,
       end: oldState.item2 - repetitions * 60 + secondHandDifference,
@@ -72,8 +85,10 @@ class _MiniClockState extends State<MiniClock> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final Tuple2<double, double> oldState = Provider.of<ClockStateListener>(context).oldState;
-    final Tuple2<double, double> newState = Provider.of<ClockStateListener>(context).newState;
+    final Tuple2<double, double> oldState =
+        Provider.of<ClockStateListener>(context).oldState;
+    final Tuple2<double, double> newState =
+        Provider.of<ClockStateListener>(context).newState;
     final styleProvider = Provider.of<StyleProvider>(context);
 
     print('build MiniClock with $oldState and $newState');

@@ -81,7 +81,6 @@ List<List<Tuple2<double, double>>> buildDigit(int digit, Point origin, List<List
 
 List<List<Tuple2<double, double>>> _moveToPoint(
     List<List<Tuple2<double, double>>> pixels, Point origin, List<List<Tuple2<double, double>>> grid) {
-  //final movedPixels = List<List<Tuple2<double, double>>>.generate(7, (_) => List(11));
   for (var i = 0; i < pixels.length; ++i) {
     for (var j = 0; j < pixels[i].length; ++j) {
       var o = pixels[i][j];
