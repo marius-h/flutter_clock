@@ -3,7 +3,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:simple_clock/models/hand.dart';
 
-
 class DrawnHand extends Hand {
   /// Create a const clock [Hand].
   ///

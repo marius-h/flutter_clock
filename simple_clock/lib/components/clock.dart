@@ -89,12 +89,6 @@ class _ClockState extends State<Clock> {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          int index = Random().nextInt(_changeListeners.length);
-          _changeListeners[index].setClockState(ClockState.north_west);
-        },
-      ),
     );
   }
 }

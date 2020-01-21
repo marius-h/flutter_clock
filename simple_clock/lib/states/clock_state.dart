@@ -1,6 +1,5 @@
 import 'package:tuple/tuple.dart';
 
-
 // all clock states
 class ClockState {
   static const north_north = const Tuple2<double, double>(0, 0);
@@ -15,5 +14,5 @@ class ClockState {
   static const east_west = const Tuple2<double, double>(15, 45);
 
   static const reset = const Tuple2<double, double>(0, 0);
-  static const idle = const Tuple2<double, double>(37.5,37.5);
+  static const idle = const Tuple2<double, double>(37.5, 37.5);
 }

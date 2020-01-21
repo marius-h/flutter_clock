@@ -11,9 +11,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (_) => StyleProvider(isLightTheme: false),
+        create: (_) => StyleProvider(isLightTheme: true),
         child: MaterialApp(
           title: 'Analog clocks to digital clock',
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
@@ -21,7 +22,6 @@ class MyApp extends StatelessWidget {
             create: (_) => TimeProvider(),
             child: ClockScreen(),
           ),
-        )
-    );
+        ));
   }
 }
